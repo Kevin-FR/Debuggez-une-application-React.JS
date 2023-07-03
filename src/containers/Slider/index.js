@@ -8,7 +8,7 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
   const nextCard = () => {
     if (byDateDesc) {
@@ -21,15 +21,16 @@ const Slider = () => {
   useEffect(() => {
     nextCard();
   });
+  
   return (
-    <div key="sliders" className="SlideCardList">
+    <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        
+        <div key={`slide-${JSON.stringify(idx)}`}>
           <div
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
-            key={`slide-${idx + event.title}`}
           >
             <img src={event.cover} alt="forum" />
             <div className="SlideCard__descriptionContainer">
@@ -53,7 +54,7 @@ const Slider = () => {
               ))}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
